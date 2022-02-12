@@ -25,7 +25,7 @@ jobs:
       with:
         pytest-coverage: pytest-coverage.txt
     - name: Codecov
-        codecov -0d80fc5f-df96-4af3-a501-7ede69a25da7
+        codecov -t 0d80fc5f-df96-4af3-a501-7ede69a25da7
 
         
         
