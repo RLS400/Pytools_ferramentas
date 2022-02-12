@@ -24,6 +24,5 @@ jobs:
       uses: coroo/pytest-coverage-commentator@v1.0.2
       with:
         pytest-coverage: pytest-coverage.txt
-
-        
-        
+    - name: codecov
+      run: codecov -t 0d80fc5f-df96-4af3-a501-7ede69a25da7
