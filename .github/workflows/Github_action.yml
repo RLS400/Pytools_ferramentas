@@ -20,8 +20,10 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names 
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-    - name: pytest
-        pytest libpytools_teste --cov=libpytools_teste
+    - name: pytest-coverage-commentator
+      uses: coroo/pytest-coverage-commentator@v1.0.2
+      with:
+        pytest-coverage: pytest-coverage.txt
     - name: Codecov
         codecov -0d80fc5f-df96-4af3-a501-7ede69a25da7
 
