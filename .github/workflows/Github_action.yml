@@ -13,8 +13,8 @@ jobs:
         python-version: 3.10.2
     - name: Instalar dependências
       run: |
-        python -m pip install --upgrade pip codecov
-        pip install -r requirements-dev.txt
+        python -m pip install --upgrade pip 
+        pip install -r requirements-dev.txt codecov
     - name: Lint with flake8
       run: |
           # stop the build if there are Python syntax errors or undefined names 
