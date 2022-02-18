@@ -101,7 +101,7 @@ def find_package_data(
     return out
 
 
-PACKAGE = "libpytools_teste"
+PACKAGE = "libpytools"
 NAME = PACKAGE #nome que será rodado no pip install
 DESCRIPTION = "Módulo para exemplificar construção de projetos Python no curso PyTools"
 AUTHOR = "Robson Silva"

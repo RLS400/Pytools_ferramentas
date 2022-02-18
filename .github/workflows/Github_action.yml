@@ -1,28 +1,35 @@
-name: Pytools_ferramentas
+name: Python application
 
-on: [push]
+on:
+  push:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.10.2
       uses: actions/setup-python@v2
       with:
         python-version: 3.10.2
-    - name: Instalar dependências
+    - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip 
-        pip install -r requirements-dev.txt
-        pip install codecov
+        python -m pip install --upgrade pip
+        pip install -q pipenv codecov flake8
+        pipenv sync --dev
     - name: Lint with flake8
       run: |
-          # stop the build if there are Python syntax errors or undefined names 
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-    - name: pytest-coverage-commentator
-      uses: coroo/pytest-coverage-commentator@v1.0.2
-      with:
-        pytest-coverage: pytest-coverage.txt
-    - name: codecov
-      run: codecov -t 0d80fc5f-df96-4af3-a501-7ede69a25da7
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Teste de código com pytest
+      run: |
+        pipenv run pytest libpytools --cov=libpytools
+    - name: Relatório Coverage
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        pipenv run codecov
