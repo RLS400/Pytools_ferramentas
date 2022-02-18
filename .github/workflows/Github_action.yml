@@ -10,16 +10,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.10.0
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.10.0
+        python-version: 3.9
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install codecov
-        pip install flake8 pytest
-        pip install -r requirements-dev.txt
+        pip install -q pipenv codecov flake8
+        pipenv sync --dev
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -28,8 +27,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Teste de código com pytest
       run: |
-        pytest --cov=libpytools_teste
-    - name: Cobertura de testes com codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
+        pipenv run pytest libpythonpro --cov=libpythonpro
+    - name: Relatório Coverage
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        pipenv run codecov
